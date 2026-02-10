@@ -1,50 +1,61 @@
 # Project LOGOS: Algorithmic Complexity in Human FOXP2 Gene
 
 ## 🔬 Overview
-This project applies **Information Theory (Shannon Entropy)**, **Algorithmic Complexity (Kolmogorov/Zlib)**, and **Bioinformatics** to analyze the structural differences between the Human and Chimpanzee *FOXP2* gene (associated with language and cognition).
+This project applies **Information Theory (Shannon Entropy)**, **Algorithmic Complexity (Kolmogorov/Zlib)**, and **Bioinformatics** to analyze the structural differences between the Human (*Homo sapiens*) and Chimpanzee (*Pan troglodytes*) *FOXP2* gene.
 
-While evolutionary biology often focuses on protein-coding similarity (~98%), this project investigates the **informational density** of the mRNA transcripts, revealing significant structural divergence in non-coding regulatory regions.
+While evolutionary biology often focuses on protein-coding similarity (~98%), this project investigates the **informational density** of the mRNA transcripts. As a Professor of Optimization, I apply mathematical modeling to demonstrate that the massive expansion of the human gene (3x larger) exhibits a significant increase in structural order and syntactic density.
 
 ## 📊 Key Findings
 
-### 1. Shannon Entropy (Information Density)
-![Entropy Analysis](comparacao_entropia_foxp2.png)
-* **Length Discrepancy:** The Human transcript (~6.6kb) is nearly **3x larger** than the Chimpanzee transcript (~2.4kb).
-* **Entropy Valleys:** The human-exclusive region (3' UTR) exhibits specific areas of **low entropy (<1.8 bits)**, suggesting high algorithmic structure and regulatory syntax rather than random evolutionary "noise".
+### 1. Statistical Significance & Bio-Data
+* **Length Discrepancy:** The Human transcript (6,618 bp) is **64% larger** than the Chimpanzee (2,380 bp).
+* **The "RefSeq" Delta:** Analysis of curated RefSeq data shows a **7.49% drop in GC content** in humans, suggesting a more dynamic and accessible regulatory architecture for gene expression.
+* **P-Value Evidence:** Using an Independent T-Test on sliding windows, we found **t = -13.12** and **p < 0.000001**, proving that the difference in information density is not due to chance.
 
-### 2. Algorithmic Compressibility (Zlib/DEFLATE)
+### 2. Shannon Entropy (Order vs. Noise)
+![Entropy Analysis](entropia_perfil_janela100_passo20.png)
+* **Lower Entropy = Higher Order:** Despite its larger size, the Human gene has a **lower average entropy (1.91 bits)** than the Chimpanzee (1.93 bits).
+* **Entropy Valleys:** The human-exclusive 3' UTR region contains "vales" of low entropy, indicating highly structured regulatory "modules" rather than random evolutionary insertions.
+
+### 3. Algorithmic Complexity (Zlib Compression)
 ![Compression Analysis](comparacao_zlib.png)
-* **Syntactic Density:** Despite being significantly larger, the Human gene shows a **lower compression ratio (0.30)** compared to the Chimpanzee (0.32).
-* **Conclusion:** In Information Theory, higher compressibility implies higher redundancy and order. This suggests the human "junk DNA" regions are actually highly structured regulatory code, not random insertions.
+* **Compression Ratio:** Human (**0.3049**) vs. Chimpanzee (**0.3189**).
+* **Information Density:** The human gene is more compressible, achieving a lower **Bits per Base (2.44)**.
+* **Conclusion:** Higher compressibility in a larger sequence is a mathematical hallmark of **modular design and hierarchical syntax**. This suggests that human-specific "non-coding" regions are actually high-level regulatory software.
 
 ## 🛠 Tech Stack
 * **Language:** Python 3.12
-* **Libraries:** BioPython, NumPy, Matplotlib, Zlib
-* **Data Source:** NCBI GenBank (Dynamic Fetching via Entrez)
-* **Concepts:** Shannon Entropy, Sliding Window Analysis, GC Content, Lossless Compression Ratios.
+* **Core Libraries:** `BioPython` (GenBank ETL), `SciPy` (Inferential Statistics), `NumPy` & `Matplotlib` (Data Visualization), `Zlib` (Algorithmic Complexity).
+* **Environment:** Linux (Ubuntu/Debian), VS Code, Python Virtual Environments (.venv).
 
-## 🚀 How to Run
-1.  Clone the repository:
+## 🚀 How to Run the Pipeline
+1.  **Clone & Setup:**
     ```bash
     git clone [https://github.com/maurizioprizzi/project-logos.git](https://github.com/maurizioprizzi/project-logos.git)
+    cd project-logos
+    python3 -m venv .venv
+    source .venv/bin/activate
+    pip install biopython matplotlib numpy scipy
     ```
-2.  Install dependencies:
+2.  **Execute Analysis:**
     ```bash
-    pip install biopython matplotlib numpy pandas
-    ```
-3.  Run the analysis pipeline:
-    ```bash
-    # Step 1: Fetch latest data from NCBI
+    # 1. Fetch data from NCBI RefSeq
     python3 coleta_dados.py
 
-    # Step 2: Generate Entropy Graph
-    python3 visualizacao_entropia.py
+    # 2. Basic EDA (Length, GC%, Dinucleotides)
+    python3 analise_basica.py
 
-    # Step 3: Calculate Compression Ratios
+    # 3. Statistical Analysis (Shannon Entropy & T-Test)
+    python3 calculo_entropia.py
+
+    # 4. Complexity Analysis (Zlib/Compression)
     python3 analise_avancada.py
+
+    # 5. Visual Profile Generation
+    python3 visualizacao_entropia.py
     ```
 
 ## 👨‍🏫 Author
 **Maurizio Prizzi**
 *Professor of Optimization & Data Science*
-*Expert in Mathematical Modeling & Logic*
+*Expert in Mathematical Modeling, Logic, and Complex Systems Analysis*

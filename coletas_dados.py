@@ -1,58 +1,85 @@
 import os
+from time import sleep
 from Bio import Entrez, SeqIO
+from urllib.error import HTTPError
 
 # --- CONFIGURAÇÃO ---
-Entrez.email = "seu_email_aqui@gmail.com"  # <--- MANTENHA SEU EMAIL AQUI
+Entrez.email = "maurizioprizzi@gmail.com"
 
-def buscar_e_baixar(organismo, gene, nome_arquivo):
+# Validação de email
+if not Entrez.email or "@" not in Entrez.email or "exemplo" in Entrez.email:
+    raise ValueError("Configure um email real em Entrez.email!")
+
+def buscar_e_baixar(organismo, gene, nome_arquivo, usar_refseq=True):
     """
-    1. Busca o ID mais recente no NCBI (para não depender de versões fixas).
-    2. Baixa a sequência e salva.
+    Busca e baixa sequências de genes do NCBI de forma dinâmica.
+    
+    Args:
+        organismo: Nome científico (ex: "Homo sapiens")
+        gene: Nome do gene (ex: "FOXP2")
+        nome_arquivo: Caminho para salvar o FASTA
+        usar_refseq: Se True, prioriza sequências RefSeq
     """
-    print(f"--- Processando: {organismo} | Gene: {gene} ---")
+    print(f"--- {organismo} | {gene} ---")
     
     try:
-        # PASSO 1: A Busca Inteligente (Dynamic Search)
-        # Query: "Organismo"[Organism] AND "Gene"[Gene Name] AND biomol_mrna[PROP]
-        term = f'"{organismo}"[Organism] AND "{gene}"[Gene Name] AND biomol_mrna[PROP]'
+        # Construir query com filtro opcional de RefSeq
+        filtro_refseq = ' AND refseq[filter]' if usar_refseq else ''
+        term = (f'"{organismo}"[Organism] AND "{gene}"[Gene Name] '
+                f'AND biomol_mrna[PROP]{filtro_refseq}')
         
-        print(f"   [...] Buscando ID atualizado para {organismo}...")
-        handle_search = Entrez.esearch(db="nucleotide", term=term, retmax=1, sort="relevance")
-        record_search = Entrez.read(handle_search)
-        handle_search.close()
+        # PASSO 1: Buscar ID
+        print(f"   Buscando ID...")
+        handle = Entrez.esearch(db="nucleotide", term=term, retmax=1, sort="relevance")
+        resultado = Entrez.read(handle)
+        handle.close()
+        sleep(0.4)  # Rate limiting
         
-        if not record_search["IdList"]:
-            print(f"   [ERRO] Nenhum gene encontrado para {organismo}.")
-            return
-
-        # Pega o primeiro ID da lista (o mais relevante/recente)
-        id_recente = record_search["IdList"][0]
-        print(f"   [!] ID Encontrado: {id_recente}")
-
-        # PASSO 2: O Download (Fetch)
-        print(f"   [...] Baixando sequência...")
-        handle_fetch = Entrez.efetch(db="nucleotide", id=id_recente, rettype="fasta", retmode="text")
-        registro = SeqIO.read(handle_fetch, "fasta")
-        handle_fetch.close()
+        if not resultado["IdList"]:
+            print(f"Nenhuma sequência encontrada\n")
+            return False
         
-        # Salva no disco
+        id_seq = resultado["IdList"][0]
+        print(f"ID: {id_seq}")
+        
+        # PASSO 2: Baixar sequência
+        print(f"   Baixando...")
+        handle = Entrez.efetch(db="nucleotide", id=id_seq, 
+                              rettype="fasta", retmode="text")
+        registro = SeqIO.read(handle, "fasta")
+        handle.close()
+        sleep(0.4)
+        
+        # Validação
+        if len(registro.seq) == 0:
+            print(f"Sequência vazia!\n")
+            return False
+        
+        # Salvar
         with open(nome_arquivo, "w") as f:
             SeqIO.write(registro, f, "fasta")
-            
-        print(f"   [SUCESSO] Arquivo salvo: {nome_arquivo}")
-        print(f"   Descrição: {registro.description}")
-        print(f"   Tamanho: {len(registro.seq)} pares de base\n")
         
+        print(f"Salvo: {nome_arquivo}")
+        print(f"{len(registro.seq)} bp | {registro.description[:60]}...\n")
+        return True
+        
+    except HTTPError as e:
+        print(f"Erro de conexão: {e}\n")
+        return False
+    except RuntimeError as e:
+        print(f"Erro no FASTA: {e}\n")
+        return False
     except Exception as e:
-        print(f"   [ERRO CRÍTICO]: {e}\n")
+        print(f"Erro inesperado: {e}\n")
+        return False
 
 if __name__ == "__main__":
-    print(">>> PROJETO LOGOS 2.0: COLETA DINÂMICA <<<\n")
-
-    # Humano
-    buscar_e_baixar("Homo sapiens", "FOXP2", "humano_foxp2.fasta")
-
-    # Chimpanzé (Agora vai funcionar independente da versão)
-    buscar_e_baixar("Pan troglodytes", "FOXP2", "chimp_foxp2.fasta")
+    print("=== COLETA DE SEQUÊNCIAS NCBI ===\n")
     
-    print("Processo finalizado.")
+    resultados = []
+    resultados.append(buscar_e_baixar("Homo sapiens", "FOXP2", "humano_foxp2.fasta"))
+    resultados.append(buscar_e_baixar("Pan troglodytes", "FOXP2", "chimp_foxp2.fasta"))
+    
+    # Relatório final
+    sucessos = sum(resultados)
+    print(f"Finalizado: {sucessos}/{len(resultados)} sequências baixadas com sucesso.")
