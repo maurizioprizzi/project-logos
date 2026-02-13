@@ -1,0 +1,46 @@
+[
+  {
+    "especie": "Homo_sapiens",
+    "nome_comum": "Humano",
+    "accession": "NM_014491",
+    "mrna_tamanho": 6543,
+    "cds_tamanho": 2148,
+    "proteina_aa": 715,
+    "mrna_path": "./homo_sapiens_foxp2_mrna.fasta",
+    "cds_path": "./homo_sapiens_foxp2_cds.fasta",
+    "descricao": "Homo sapiens forkhead box P2 (FOXP2), transcript variant 1, mRNA"
+  },
+  {
+    "especie": "Pan_troglodytes",
+    "nome_comum": "Chimpanzé",
+    "accession": "NM_001009020",
+    "mrna_tamanho": 2380,
+    "cds_tamanho": 2151,
+    "proteina_aa": 716,
+    "mrna_path": "./pan_troglodytes_foxp2_mrna.fasta",
+    "cds_path": "./pan_troglodytes_foxp2_cds.fasta",
+    "descricao": "Pan troglodytes forkhead box P2 (FOXP2), mRNA"
+  },
+  {
+    "especie": "Mus_musculus",
+    "nome_comum": "Camundongo",
+    "accession": "NM_053242",
+    "mrna_tamanho": 6760,
+    "cds_tamanho": 2145,
+    "proteina_aa": 714,
+    "mrna_path": "./mus_musculus_foxp2_mrna.fasta",
+    "cds_path": "./mus_musculus_foxp2_cds.fasta",
+    "descricao": "Mus musculus forkhead box P2 (Foxp2), transcript variant 1, mRNA"
+  },
+  {
+    "especie": "Gorilla_gorilla",
+    "nome_comum": "Gorila",
+    "accession": "XM_063708043.1",
+    "mrna_tamanho": 5560,
+    "cds_tamanho": 2139,
+    "proteina_aa": 712,
+    "mrna_path": "./gorilla_gorilla_foxp2_mrna.fasta",
+    "cds_path": "./gorilla_gorilla_foxp2_cds.fasta",
+    "descricao": "PREDICTED: Gorilla gorilla gorilla forkhead box P2 (FOXP2), transcript variant X24, mRNA"
+  }
+]
