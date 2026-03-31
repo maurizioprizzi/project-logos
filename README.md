@@ -2,9 +2,9 @@
 
 ## Overview
 
-This project applies **Information Theory** (Shannon Entropy), **Algorithmic Complexity** (Kolmogorov via Zlib), and **statistical inference** to compare the FOXP2 coding sequence (CDS) across four mammalian species: *Homo sapiens*, *Pan troglodytes*, *Mus musculus*, and *Gorilla gorilla*.
+This project applies **Information Theory** (Shannon Entropy), **Algorithmic Complexity** (Kolmogorov via Zlib), and **statistical inference** to compare the FOXP2 coding sequence (CDS) across five mammalian species: *Homo sapiens*, *Pan troglodytes*, *Mus musculus*, *Gorilla gorilla*, and *Macaca mulatta*.
 
-FOXP2 encodes a transcription factor critical for speech and language development. Its protein is among the 5% most conserved in mammals — differing by only 2 amino acids between humans and chimpanzees, and 3 between humans and mice.
+FOXP2 encodes a transcription factor critical for speech and language development. Its protein is notablediffering by only 2 amino acids between humans and chimpanzees, and 3 between humans and mice.
 
 ### Version History
 
@@ -16,15 +16,16 @@ FOXP2 encodes a transcription factor critical for speech and language developmen
 
 ## Key Findings
 
-When comparing equivalent coding sequences, **all four species are informationally indistinguishable** in FOXP2:
+When comparing equivalent coding sequences, **all five species are informationally indistinguishable** in FOXP2:
 
 | Comparison | Δ Entropy (bits) | p-value | Cohen's d | Δ Compression | p-value | Cohen's d |
 |---|---|---|---|---|---|---|
 | Human vs Chimpanzee | −0.0004 | 0.988 | 0.007 | 0.0020 | 0.909 | 0.052 |
 | Human vs Mouse | +0.0006 | 0.979 | 0.012 | 0.0005 | 0.976 | 0.013 |
 | Human vs Gorilla | −0.0012 | 0.961 | 0.022 | 0.0020 | 0.910 | 0.051 |
+| Human vs Rhesus Macaque | −0.0001 | 0.998 | 0.001 | 0.0030 | 0.859 | 0.081 |
 
-All Cohen's d values are below 0.07 (negligible effect). The CDS sizes differ by at most 0.6% across species, compared to the 184% difference in full mRNA — confirming that the original findings were artifacts of isoform selection.
+All Cohen's d values are below 0.10 (negligible effect). The CDS sizes differ by at most 0.6% across species, compared to the 215% difference in full mRNA — confirming that the original findings were artifacts of isoform selection.
 
 ### What the original analysis got wrong
 
@@ -48,6 +49,7 @@ Sequences obtained from NCBI RefSeq with controlled accession numbers:
 | *Pan troglodytes* | NM_001009020 | 2,151 | 716 |
 | *Mus musculus* | NM_053242 | 2,145 | 714 |
 | *Gorilla gorilla* | XM_063708043.1 | 2,139 | 712 |
+| *Macaca mulatta* | NM_001033021.1 | 2,145 | 714 |
 
 ## Pipeline
 
