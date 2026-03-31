@@ -47,7 +47,7 @@ Sequences obtained from NCBI RefSeq with controlled accession numbers:
 | *Homo sapiens* | NM_014491 | 2,148 | 715 |
 | *Pan troglodytes* | NM_001009020 | 2,151 | 716 |
 | *Mus musculus* | NM_053242 | 2,145 | 714 |
-| *Gorilla gorilla* | XM_063708043 | 2,139 | 712 |
+| *Gorilla gorilla* | XM_063708043.1 | 2,139 | 712 |
 
 ## Pipeline
 

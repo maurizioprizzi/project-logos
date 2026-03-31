@@ -125,6 +125,7 @@ def teste_vies_tamanho(sequencias, tamanhos_teste=[200, 500, 1000, 2000]):
     Se o ratio muda significativamente com o tamanho, 
     comparações globais entre sequências de tamanhos diferentes são inválidas.
     """
+    random.seed(42)
     print(f"\n{'='*70}")
     print("  TESTE DE VIÉS DE TAMANHO DO DEFLATE")
     print(f"{'='*70}")
@@ -218,13 +219,12 @@ def teste_estatistico(resultados, tamanho_janela):
             t_stat, p_val = sp_stats.ttest_ind(ratios_a, ratios_b, equal_var=False)
             
             # Tamanho de efeito: Cohen's d
+            na, nb = len(ratios_a), len(ratios_b)
             pooled_std = math.sqrt(
-                (np.std(ratios_a, ddof=1)**2 + np.std(ratios_b, ddof=1)**2) / 2
+                ((na - 1) * np.std(ratios_a, ddof=1)**2 + (nb - 1) * np.std(ratios_b, ddof=1)**2) 
+                / (na + nb - 2)
             )
-            if pooled_std > 0:
-                cohens_d = abs(np.mean(ratios_a) - np.mean(ratios_b)) / pooled_std
-            else:
-                cohens_d = 0
+            cohens_d = abs(np.mean(ratios_a) - np.mean(ratios_b)) / pooled_std if pooled_std > 0 else 0
             
             # Interpretação do Cohen's d
             if cohens_d < 0.2:

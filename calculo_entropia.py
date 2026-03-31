@@ -230,8 +230,10 @@ def testes_estatisticos(resultados, tamanho_janela):
             t_stat, p_val = sp_stats.ttest_ind(ea, eb, equal_var=False)
             
             # Cohen's d
+            na, nb = len(ea), len(eb)
             pooled_std = math.sqrt(
-                (np.std(ea, ddof=1)**2 + np.std(eb, ddof=1)**2) / 2
+                ((na - 1) * np.std(ea, ddof=1)**2 + (nb - 1) * np.std(eb, ddof=1)**2) 
+                / (na + nb - 2)
             )
             cohens_d = abs(np.mean(ea) - np.mean(eb)) / pooled_std if pooled_std > 0 else 0
             
