@@ -1,59 +1,73 @@
-# Project LOGOS: Algorithmic Complexity Analysis of the FOXP2 Gene
+# Projeto LOGOS: Análise de Complexidade Algorítmica do Gene FOXP2
 
-## Overview
+## Visão Geral
 
-This project applies **Information Theory** (Shannon Entropy), **Algorithmic Complexity** (Kolmogorov via Zlib), and **statistical inference** to compare the FOXP2 coding sequence (CDS) across five mammalian species: *Homo sapiens*, *Pan troglodytes*, *Mus musculus*, *Gorilla gorilla*, and *Macaca mulatta*.
+Este projeto aplica métricas de **Teoria da Informação** (Entropia de Shannon e Complexidade de Kolmogorov via Zlib) e **inferência estatística** para comparar a sequência codificante (CDS) do gene FOXP2 em cinco espécies de mamíferos: *Homo sapiens*, *Pan troglodytes*, *Mus musculus*, *Gorilla gorilla* e *Macaca mulatta*.
 
-FOXP2 encodes a transcription factor critical for speech and language development. Its protein is notablediffering by only 2 amino acids between humans and chimpanzees, and 3 between humans and mice.
+O FOXP2 codifica um fator de transcrição essencial para o desenvolvimento da fala e linguagem em humanos. A proteína é notavelmente conservada entre mamíferos — diferindo em apenas 2 aminoácidos entre humanos e chimpanzés, e em 3 entre humanos e camundongos.
 
-### Version History
+### Histórico de Versões
 
-**v2.0 (February 2026) — Revised methodology.** The original analysis (v1) compared non-equivalent mRNA isoforms, producing a spurious 64% size difference and artificial information-theoretic divergence. This version corrects three critical flaws:
+**v2.0 (Fevereiro de 2026) — Metodologia revisada.** A análise original (v1) comparava isoformas não equivalentes de mRNA, produzindo uma diferença de tamanho artificial de 64% e divergência informacional espúria. Esta versão corrige três falhas críticas:
 
-1. **Isoform control:** CDS extracted from canonical isoforms via fixed RefSeq accession numbers, eliminating UTR-driven size artifacts.
-2. **Size-bias correction:** Non-overlapping windows (200 bp) for compression analysis, eliminating DEFLATE dictionary bias.
-3. **Effect size reporting:** Cohen's d alongside p-values, preventing statistical significance inflation from autocorrelated sliding windows.
+1. **Controle de isoformas:** CDS extraída de isoformas canônicas via accession numbers fixos do RefSeq, eliminando artefatos de tamanho causados pelas UTRs.
+2. **Correção do viés de tamanho:** Janelas não-sobrepostas de 200 bp para análise de compressão, eliminando o viés de dicionário do DEFLATE.
+3. **Tamanho de efeito:** Cohen's d reportado junto com p-values, prevenindo inflação de significância estatística por janelas autocorrelacionadas.
 
-## Key Findings
+---
 
-When comparing equivalent coding sequences, **all five species are informationally indistinguishable** in FOXP2:
+## Resultados Principais
 
-| Comparison | Δ Entropy (bits) | p-value | Cohen's d | Δ Compression | p-value | Cohen's d |
+Ao comparar sequências codificantes equivalentes, **todas as cinco espécies são informacionalmente indistinguíveis** no FOXP2:
+
+| Comparação | Δ Entropia (bits) | p-value | Cohen's d | Δ Compressão | p-value | Cohen's d |
 |---|---|---|---|---|---|---|
-| Human vs Chimpanzee | −0.0004 | 0.988 | 0.007 | 0.0020 | 0.909 | 0.052 |
-| Human vs Mouse | +0.0006 | 0.979 | 0.012 | 0.0005 | 0.976 | 0.013 |
-| Human vs Gorilla | −0.0012 | 0.961 | 0.022 | 0.0020 | 0.910 | 0.051 |
-| Human vs Rhesus Macaque | −0.0001 | 0.998 | 0.001 | 0.0030 | 0.859 | 0.081 |
+| Humano vs Chimpanzé | −0,0004 | 0,988 | 0,007 | 0,0020 | 0,909 | 0,052 |
+| Humano vs Camundongo | +0,0006 | 0,979 | 0,012 | 0,0005 | 0,976 | 0,013 |
+| Humano vs Gorila | −0,0012 | 0,961 | 0,022 | 0,0020 | 0,910 | 0,051 |
+| Humano vs Macaco Rhesus | −0,0001 | 0,998 | 0,001 | 0,0030 | 0,859 | 0,081 |
 
-All Cohen's d values are below 0.10 (negligible effect). The CDS sizes differ by at most 0.6% across species, compared to the 215% difference in full mRNA — confirming that the original findings were artifacts of isoform selection.
+Todos os valores de Cohen's d estão abaixo de 0,10 (efeito negligenciável). As CDS diferem em no máximo 0,6% entre as espécies, contra 215% de diferença no mRNA completo — confirmando que os resultados originais eram artefatos de seleção de isoforma.
 
-### What the original analysis got wrong
+### Visualizações
 
-| Metric | Original (v1) | Corrected (v2) |
+![Análise de Complexidade Algorítmica — FOXP2 CDS](compressao_foxp2.png)
+
+![Análise de Entropia de Shannon — FOXP2 CDS](entropia_foxp2.png)
+
+---
+
+### O que a análise original errou
+
+| Métrica | Original (v1) | Corrigido (v2) |
 |---|---|---|
-| Sequences compared | mRNA (different isoforms) | CDS (canonical isoforms) |
-| Human size | 6,618 bp | 2,148 bp |
-| Chimpanzee size | 2,380 bp | 2,151 bp |
-| Size difference | 64% | 0.1% |
-| Entropy difference | 0.0225 bits (p < 0.000001) | 0.0004 bits (p = 0.988) |
-| Windows | Overlapping (step=1) | Non-overlapping (200 bp) |
-| Effect size | Not reported | Cohen's d = 0.007 |
+| Sequências comparadas | mRNA (isoformas diferentes) | CDS (isoformas canônicas) |
+| Tamanho humano | 6.618 bp | 2.148 bp |
+| Tamanho chimpanzé | 2.380 bp | 2.151 bp |
+| Diferença de tamanho | 64% | 0,1% |
+| Diferença de entropia | 0,0225 bits (p < 0,000001) | 0,0004 bits (p = 0,988) |
+| Janelas | Sobrepostas (passo=1) | Não-sobrepostas (200 bp) |
+| Tamanho de efeito | Não reportado | Cohen's d = 0,007 |
 
-## Data Sources
+---
 
-Sequences obtained from NCBI RefSeq with controlled accession numbers:
+## Fontes de Dados
 
-| Species | Accession | CDS (bp) | Protein (aa) |
+Sequências obtidas do NCBI RefSeq com accession numbers controlados:
+
+| Espécie | Accession | CDS (bp) | Proteína (aa) |
 |---|---|---|---|
-| *Homo sapiens* | NM_014491 | 2,148 | 715 |
-| *Pan troglodytes* | NM_001009020 | 2,151 | 716 |
-| *Mus musculus* | NM_053242 | 2,145 | 714 |
-| *Gorilla gorilla* | XM_063708043.1 | 2,139 | 712 |
-| *Macaca mulatta* | NM_001033021.1 | 2,145 | 714 |
+| *Homo sapiens* | NM_014491 | 2.148 | 715 |
+| *Pan troglodytes* | NM_001009020 | 2.151 | 716 |
+| *Mus musculus* | NM_053242 | 2.145 | 714 |
+| *Gorilla gorilla* | XM_063708043.1 | 2.139 | 712 |
+| *Macaca mulatta* | NM_001033021.1 | 2.145 | 714 |
+
+---
 
 ## Pipeline
 
-### Requirements
+### Requisitos
 
 ```bash
 git clone https://github.com/maurizioprizzi/project-logos.git
@@ -63,55 +77,61 @@ source .venv/bin/activate
 pip install biopython matplotlib numpy scipy
 ```
 
-### Execution
+### Execução
 
 ```bash
-# Step 1: Download sequences (requires internet)
+# Passo 1: Download das sequências (requer internet)
 python3 coletas_dados.py
 
-# Step 2: Basic statistics and comparability validation
+# Passo 2: Estatísticas básicas e validação de comparabilidade
 python3 analise_basica.py
 
-# Step 3: Zlib compression analysis (non-overlapping windows)
+# Passo 3: Análise de compressão Zlib (janelas não-sobrepostas)
 python3 analise_avancada.py
 
-# Step 4: Shannon entropy with effect sizes
+# Passo 4: Entropia de Shannon com tamanhos de efeito
 python3 calculo_entropia.py
 ```
 
-Each script is self-contained and produces both terminal output and publication-quality figures (PNG, 300 dpi).
+Cada script é independente e produz saída no terminal e figuras em alta resolução (PNG, 300 dpi).
 
-### Output Files
+### Arquivos de Saída
 
-| File | Description |
+| Arquivo | Descrição |
 |---|---|
-| `*_foxp2_cds.fasta` | Coding sequences per species |
-| `*_foxp2_mrna.fasta` | Full mRNA per species (for reference) |
-| `metadados.json` | Collection metadata |
-| `compressao_foxp2.png` | Compression analysis figure |
-| `entropia_foxp2.png` | Entropy analysis figure |
+| `*_foxp2_cds.fasta` | Sequências codificantes por espécie |
+| `*_foxp2_mrna.fasta` | mRNA completo por espécie (referência) |
+| `metadados.json` | Metadados da coleta |
+| `compressao_foxp2.png` | Figura da análise de compressão |
+| `entropia_foxp2.png` | Figura da análise de entropia |
 
-## Tech Stack
+---
+
+## Tecnologias Utilizadas
 
 - **Python 3.12**
-- **BioPython** — GenBank fetching and CDS extraction
-- **SciPy** — Welch's t-test, Mann-Whitney U, Levene's test
-- **NumPy / Matplotlib** — Numerical analysis and visualization
-- **Zlib** — DEFLATE compression as Kolmogorov complexity proxy
+- **BioPython** — Download e extração de CDS do GenBank
+- **SciPy** — Teste t de Welch, Mann-Whitney U, teste de Levene
+- **NumPy / Matplotlib** — Análise numérica e visualização
+- **Zlib** — Compressão DEFLATE como proxy da Complexidade de Kolmogorov
 
-## Lessons Learned
+---
 
-This project serves as a case study in computational bioinformatics methodology:
+## Lições Aprendidas
 
-1. **Data selection determines results.** Comparing non-equivalent isoforms created a 64% size difference that does not exist in biology. Controlled accession numbers are essential.
-2. **Statistical significance ≠ practical significance.** With thousands of autocorrelated windows, any trivial difference yields p < 0.000001. Effect size (Cohen's d) is indispensable.
-3. **Compression algorithms have size bias.** DEFLATE builds more efficient dictionaries for longer sequences. Fixed-size non-overlapping windows eliminate this confound.
+Este projeto serve como estudo de caso em metodologia de bioinformática computacional:
 
-## Author
+1. **A seleção de dados determina o resultado.** Comparar isoformas não equivalentes criou uma diferença de 64% que não existe na biologia. Accession numbers específicos para isoformas canônicas são essenciais.
+2. **Significância estatística ≠ significância prática.** Com milhares de janelas autocorrelacionadas, qualquer diferença trivial produz p < 0,000001. O tamanho de efeito (Cohen's d) é indispensável.
+3. **Algoritmos de compressão têm viés de tamanho.** O DEFLATE comprime melhor sequências mais longas. Janelas não-sobrepostas de tamanho fixo eliminam esse confundidor.
+
+---
+
+## Autor
 
 **Maurizio Prizzi**
-*Professor of Optimization & Data Science*
+*Professor de Otimização e Ciência de Dados*
 
-## License
+## Licença
 
 MIT
