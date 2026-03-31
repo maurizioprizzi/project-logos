@@ -42,5 +42,16 @@
     "mrna_path": "./gorilla_gorilla_foxp2_mrna.fasta",
     "cds_path": "./gorilla_gorilla_foxp2_cds.fasta",
     "descricao": "PREDICTED: Gorilla gorilla gorilla forkhead box P2 (FOXP2), transcript variant X24, mRNA"
+  },
+  {
+    "especie": "Macaca_mulatta",
+    "nome_comum": "Macaco Rhesus",
+    "accession": "NM_001033021.1",
+    "mrna_tamanho": 2145,
+    "cds_tamanho": 2145,
+    "proteina_aa": 714,
+    "mrna_path": "./macaca_mulatta_foxp2_mrna.fasta",
+    "cds_path": "./macaca_mulatta_foxp2_cds.fasta",
+    "descricao": "Macaca mulatta forkhead box P2 (FOXP2), mRNA"
   }
 ]
